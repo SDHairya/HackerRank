@@ -1,45 +1,53 @@
 #!/bin/python3
 
-import math
 import os
-import random
-import re
 import sys
 
 #
-# Complete the 'morganAndString' function below.
+# Complete the getMoneySpent function below.
 #
-# The function is expected to return a STRING.
-# The function accepts following parameters:
-#  1. STRING a
-#  2. STRING b
-#
-def morgan(a, b):
-    a += "z"
-    b += "z"
-    for _ in range(len(a) + len(b) - 2):
-        if a < b:
-            yield a[0]
-            a = a[1:]
-        else:
-            yield b[0]
-            b = b[1:]
-def morganAndString(a, b):
-    # Write your code here
-    return ''.join(morgan(a, b))
+def getMoneySpent(keyboards, drives, b):
+    #
+    # Write your code here.
+    #
+    li=[]
+    keyboards.sort(reverse=True)
+    drives.sort(reverse=True)
+    for i in keyboards:
+        for j in drives:
+            li.append(i+j)
+            
+    li.sort(reverse=True)
+    if min(li)>b:
+        return -1
+    else:
+        for i in li:
+            if(i<=b):
+                return i
+    
+        
 
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
-    t = int(input().strip())
+    bnm = input().split()
 
-    for t_itr in range(t):
-        a = input()
+    b = int(bnm[0])
 
-        b = input()
+    n = int(bnm[1])
 
-        result = morganAndString(a, b)
+    m = int(bnm[2])
 
-        fptr.write(result + '\n')
+    keyboards = list(map(int, input().rstrip().split()))
+
+    drives = list(map(int, input().rstrip().split()))
+
+    #
+    # The maximum amount of money she can spend on a keyboard and USB drive, or -1 if she can't purchase both items
+    #
+
+    moneySpent = getMoneySpent(keyboards, drives, b)
+
+    fptr.write(str(moneySpent) + '\n')
 
     fptr.close()
